@@ -1,0 +1,95 @@
+set nocompatible
+
+""" Vundle
+" Filetype disabled during vundle setup
+filetype off
+" Setup
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'Vundlevim/Vundle.vim'
+
+" Git
+Plugin 'airblade/vim-gitgutter'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+
+" Code Completion
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'scrooloose/syntastic'
+
+" Tools
+Plugin 'editorconfig/editorconfig-vim'
+Plugin 'tpope/vim-commentary'
+Plugin 'scrooloose/nerdtree'
+
+" Colour Schemes
+Plugin 'tomasr/molokai'
+
+call vundle#end()
+
+
+
+""" General Settings
+set updatetime=250
+
+"" Syntax and Colour
+filetype indent plugin on
+syntax on
+set t_Co=256
+colorscheme molokai
+
+"" Line numbers & Current position
+set ruler
+set number
+
+"" Command bar
+set wildmenu
+set laststatus=2
+set showcmd
+
+"" Tabbing
+set autoindent
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+
+"" Searching
+set hlsearch
+set incsearch
+
+
+
+""" Functions
+"" View diff between current and saved version of file
+if !exists(":DiffOrig")
+    command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+                \ | wincmd p | diffthis
+endif
+
+
+
+""" Key Mappings
+set backspace=indent,eol,start
+set mouse=a
+
+" Moving lines to different positions
+nnoremap <C-j> :m .+1<CR>==
+nnoremap <C-Down> :m .+1<CR>==
+nnoremap <C-k> :m .-2<CR>==
+nnoremap <C-Up> :m .-2<CR>==
+
+inoremap <C-j> <Esc>:m .+1<CR>==
+inoremap <C-Down> <Esc>:m .+1<CR>==
+inoremap <C-k> <Esc>:m .-2<CR>==
+inoremap <C-Up> <Esc>:m .-2<CR>==
+
+" Soft line movement
+nnoremap <Down> g<Down>
+nnoremap <Up> g<Up>
+inoremap <Down> <C-o>g<Down>
+inoremap <Up> <C-o>g<Up>
+
+
+
+""" Startup
+"" NERDTree
+"autocmd vimenter * NERDTree
