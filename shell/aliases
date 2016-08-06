@@ -1,0 +1,28 @@
+## Directories
+alias cd..="cd .."
+alias ..="cd .."
+alias ...="cd ../../"
+alias ....="cd ../../../"
+
+# Create parent directors on demand
+alias mkdir="mkdir -pv"
+
+## Safety
+# Interactive mode on destructive tasks
+alias rm="rm -I --preserve-root"
+alias mv="mv -i"
+alias cp="cp -i"
+alias ln="ln -i"
+
+alias chown='chown --preserve-root'
+alias chmod='chmod --preserve-root'
+alias chgrp='chgrp --preserve-root'
+
+## Text Editor
+alias vi="vim"
+alias nano="vim"
+alias emacs="vim"
+
+## Human readable space reporting
+alias df="df -H"
+alias du="du -ch"
