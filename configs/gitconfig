@@ -1,0 +1,47 @@
+[user]
+	email = KevinKwan95@googlemail.com
+	name = Kevin Kwan
+
+
+[core]
+	editor = vim
+
+
+[alias]
+	wdiff = diff --color-words
+	slog = log --pretty=oneline --abbrev-commit
+
+
+[color]
+	ui = auto
+[color "branch"]
+	current = yellow bold
+	local = green bold
+	remote = cyan bold
+[color "diff"]
+	meta = yellow bold
+	frag = magenta
+	old = red bold
+	new = green bold
+	whitespace = red reverse
+[color "status"]
+	added = green bold
+	changed = yellow bold
+	untracked = red bold
+
+
+[push]
+	default = matching
+
+
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
+
+
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+[mergetool]
+	prompt = false
