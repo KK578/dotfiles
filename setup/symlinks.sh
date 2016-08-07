@@ -5,6 +5,7 @@ autoload colors;
 colors;
 COLOUR_DEFAULT="white"
 COLOUR_OKAY="green"
+COLOUR_CREATE="cyan"
 COLOUR_PROMPT="yellow"
 
 
@@ -12,22 +13,29 @@ COLOUR_PROMPT="yellow"
 function linkFile {
 	# Check if already linked.
 	if [ -L ~/$1 ]; then
-		print $fg[$COLOUR_OKAY] " > $1 already linked."
+		print $fg[$COLOUR_OKAY] " > $1 is already linked."
 	# Check if the file already exists and prompt before action.
 	elif [ -f ~/$1 ]; then
-		print $fg[$COLOUR_PROMPT] " > $1 already exists as a file, do you want to remove this and link?"
-		select yn in "Yes" "No"; do
-			case $yn in
-				Yes ) print "  > Delete/Link $1"; break;;
-				No ) print "  > Skipping $1"; break;;
-			esac
-		done
+		print -n $fg[$COLOUR_PROMPT] " > $1 already exists as a file, do you want to remove this and link? [Y/N] "
+		read -k 1 answer
+		echo -n "\n"
+		case $answer in
+			y|Y )
+				print "   > Delete/Link $1";
+				;;
+
+			* )
+				print "   > Skipping $1";
+				;;
+		esac
 	# Link file otherwise
 	else
-		print $fg[$COLOUR_OKAY] " > $1 successfully linked."
+		print $fg_bold[$COLOUR_CREATE] " > $1 link created."
 	fi
 }
 
+BASEDIR=$(readlink -f "$0")
+echo "$BASEDIR"
 
 ## Entry point of script
 print $fg[$COLOUR_DEFAULT] "[Symlinks] Setup."
