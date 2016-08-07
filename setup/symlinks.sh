@@ -34,7 +34,7 @@ function linkFile {
 	# Check if the file already exists and prompt before action.
 	elif [ -f ~/.$1 ]; then
 		if promptYesNo " > $1 already exists as a file, do you want to remove this and link?"; then
-			print "   > Delete/Link $1";
+			print $fg_bold[$COLOUR_CREATE] "   > Delete/Link $1";
 		else
 			print "   > Skipping $1";
 		fi
@@ -50,11 +50,15 @@ function linkFile {
 print $fg[$COLOUR_DEFAULT] "[Symlinks] Setup."
 
 # Check .configs links to the correct folder.
-DIR_CONFIGS="$(echo $(readlink -f '$0') | sed -e 's#setup/.*#configs#')"
+DIR_CONFIGS="$(echo $(readlink -f $0) | sed -e 's#setup/.*#configs#')"
 DIR_CURRENT_CONFIGS="$(readlink ~/.configs)"
 
 if [ DIR_CONFIGS != DIR_CURRENT_CONFIGS ]; then
-	echo "They not the same Jim."
+	if promptYesNo " > The current config symlink does not seem to point to this repository.\n   > Relink?"; then
+		rm ~/.configs
+		ln -s $DIR_CONFIGS ~/.configs
+		print $fg_bold[$COLOUR_CREATE] "  > .configs link successfully created."
+	fi
 fi
 
 # Link files from repository.
