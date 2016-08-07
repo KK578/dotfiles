@@ -9,6 +9,23 @@ COLOUR_CREATE="cyan"
 COLOUR_PROMPT="yellow"
 
 
+## Helper function prompting user for confirmation
+function promptYesNo {
+	print -n $fg[$COLOUR_PROMPT] "$1 [Y/N] "
+	read -k 1 answer
+	echo -n "\n"
+
+	case $answer in
+		y|Y )
+			return 0;
+			;;
+
+		* )
+			return 1;
+			;;
+	esac
+}
+
 ## Helper function to symbolically link configs in this repo to home directory.
 function linkFile {
 	# Check if already linked.
@@ -16,18 +33,11 @@ function linkFile {
 		print $fg[$COLOUR_OKAY] " > $1 is already linked."
 	# Check if the file already exists and prompt before action.
 	elif [ -f ~/.$1 ]; then
-		print -n $fg[$COLOUR_PROMPT] " > $1 already exists as a file, do you want to remove this and link? [Y/N] "
-		read -k 1 answer
-		echo -n "\n"
-		case $answer in
-			y|Y )
-				print "   > Delete/Link $1";
-				;;
-
-			* )
-				print "   > Skipping $1";
-				;;
-		esac
+		if promptYesNo " > $1 already exists as a file, do you want to remove this and link?"; then
+			print "   > Delete/Link $1";
+		else
+			print "   > Skipping $1";
+		fi
 	# Link file otherwise
 	else
 		# ln -sv ~/.configs/$2 ~/.$1
