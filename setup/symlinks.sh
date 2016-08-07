@@ -30,52 +30,56 @@ function promptYesNo {
 ## Helper function to symbolically link configs in this repo to home directory.
 function linkFile {
 	# Check if already linked.
-	if [ -L ~/$1 ]; then
+	if [ -L $HOME/$1 ]; then
 		# Check the symlink points to the correct location.
-		if [ $(readlink ~/$1) = ".configs/$2" ]; then
+		if [ $(readlink $HOME/$1) = "$HOME/.configs/$2" ]; then
 			print $fg_bold[$COLOUR_OKAY] " > $1 is already linked."
 		else
 			if promptYesNo " > $1 does not point to this repository.\n   > Relink?"; then
+				rm $HOME/$1
+				ln -s $HOME/.configs/$2 $HOME/$1
 				print $fg_bold[$COLOUR_CREATE] "  > $1 link created."
 			else
 				print $fg_bold[$COLOUR_NO] "   > $1 skipped."
 			fi
 		fi
 	# Check if the file already exists and prompt before action.
-	elif [ -f ~/$1 ]; then
+	elif [ -f $HOME/$1 ]; then
 		if promptYesNo " > $1 already exists as a file.\n   > Remove this and link?"; then
-			print $fg_bold[$COLOUR_CREATE] "   > $1 removed and linked.";
+			rm $HOME/$1
+			ln -s $HOME/.configs/$2 $HOME/$1
+			print $fg_bold[$COLOUR_CREATE] "   > $1 removed and link created.";
 		else
 			print $fg_bold[$COLOUR_NO] "   > $1 skipped."
 		fi
 	# Link file otherwise
 	else
-		# ln -sv ~/.configs/$2 ~/.$1
+		ln -s $HOME/.configs/$2 $HOME/$1
 		print $fg_bold[$COLOUR_CREATE] " > $1 link created."
 	fi
 }
 
 
 ## Entry point of script
-print $fg[$COLOUR_DEFAULT] "[Symlinks] Setup."
+print $fg[$COLOUR_DEFAULT] "[Symlinks] Starting."
 
 # Check .configs links to the correct folder.
 DIR_CONFIGS="$(echo $(readlink -f $0) | sed -e 's#setup/.*#configs#')"
-DIR_CURRENT_CONFIGS="$(readlink ~/.configs)"
+DIR_CURRENT_CONFIGS="$(readlink $HOME/.configs)"
 
 if [ $DIR_CONFIGS != $DIR_CURRENT_CONFIGS ]; then
 	if promptYesNo " > The current .config symlink does not seem to point to this repository.\n   > Relink?"; then
-		rm ~/.configs
-		ln -s $DIR_CONFIGS ~/.configs
-		print $fg_bold[$COLOUR_CREATE] "  > .configs link successfully created."
+		rm $HOME/.configs
+		ln -s $DIR_CONFIGS $HOME/.configs
+		print $fg_bold[$COLOUR_CREATE] "  > .configs directory link created."
 	fi
 else
-	print $fg_bold[$COLOUR_OKAY] " > .configs is already linked."
+	print $fg_bold[$COLOUR_OKAY] " > .configs directory is already linked."
 fi
 
 # Link files from repository.
 linkFile ".gitconfig" "gitconfig"
-linkFile ".zshrc"
+linkFile ".zshrc" "shell/zshrc"
 linkFile ".tmux.conf" "tmux.conf"
 linkFile ".vimrc" "vimrc"
 
