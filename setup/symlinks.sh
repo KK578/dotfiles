@@ -62,10 +62,10 @@ function linkFile {
 
 ## Entry point of script
 print $fg[$COLOUR_DEFAULT] "[Symlinks] Starting."
+DIR_DOTFILES="$(echo $(readlink -f $0) | sed -e 's#/setup/.*##')"
 
 # Check .dotfiles links to this repository.
 if [ -L $HOME/.dotfiles ]; then
-	DIR_DOTFILES="$(echo $(readlink -f $0) | sed -e 's#/setup/.*##')"
 	DIR_CURRENT_DOTFILES="$(readlink $HOME/.dotfiles)"
 
 	if [ $DIR_DOTFILES != $DIR_CURRENT_DOTFILES ]; then
