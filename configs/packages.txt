@@ -1,0 +1,6 @@
+git
+bash
+zsh
+vim
+tmux
+p7zip

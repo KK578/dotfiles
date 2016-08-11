@@ -10,7 +10,7 @@ COLOUR_PROMPT=$COLOUR_DEFAULT
 COLOUR_NO="red"
 
 
-## Helper function prompting user for confirmation
+## Helper function prompting user for confirmation.
 function promptYesNo {
 	print -n $fg[$COLOUR_PROMPT] "$1 [Y/N] "
 	read -k 1 answer
