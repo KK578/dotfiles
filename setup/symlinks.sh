@@ -3,11 +3,6 @@
 ## Colour setup.
 autoload colors;
 colors;
-COLOUR_DEFAULT="white"
-COLOUR_OKAY="green"
-COLOUR_CREATE="cyan"
-COLOUR_PROMPT=$COLOUR_DEFAULT
-COLOUR_NO="red"
 
 
 ## Helper function prompting user for confirmation.
@@ -27,6 +22,7 @@ function promptYesNo {
 	esac
 }
 
+
 ## Helper function to symbolically link configs in this repo to home directory.
 function linkFile {
 	# Check if already linked.
@@ -38,9 +34,9 @@ function linkFile {
 			if promptYesNo " > $1 does not point to this repository.\n   > Relink?"; then
 				rm $HOME/$1
 				ln -s .dotfiles/configs/$2 $HOME/$1
-				print $fg_bold[$COLOUR_CREATE] "  > $1 link created."
+				print $fg_bold[$COLOUR_MODIFY] "  > $1 link created."
 			else
-				print $fg_bold[$COLOUR_NO] "   > $1 skipped."
+				print $fg_bold[$COLOUR_NOT_OKAY] "   > $1 skipped."
 			fi
 		fi
 	# Check if the file already exists and prompt before action.
@@ -48,14 +44,14 @@ function linkFile {
 		if promptYesNo " > $1 already exists as a file.\n   > Remove this and link?"; then
 			rm $HOME/$1
 			ln -s .dotfiles/configs/$2 $HOME/$1
-			print $fg_bold[$COLOUR_CREATE] "   > $1 removed and link created.";
+			print $fg_bold[$COLOUR_MODIFY] "   > $1 removed and link created.";
 		else
-			print $fg_bold[$COLOUR_NO] "   > $1 skipped."
+			print $fg_bold[$COLOUR_NOT_OKAY] "   > $1 skipped."
 		fi
 	# Link file otherwise
 	else
 		ln -s .dotfiles/configs/$2 $HOME/$1
-		print $fg_bold[$COLOUR_CREATE] " > $1 link created."
+		print $fg_bold[$COLOUR_MODIFY] " > $1 link created."
 	fi
 }
 
@@ -72,7 +68,7 @@ if [ -L $HOME/.dotfiles ]; then
 		if promptYesNo " > The current .dotfiles symlink does not seem to point to this repository.\n   > Relink?"; then
 			rm $HOME/.dotfiles
 			ln -s $DIR_DOTFILES $HOME/.dotfiles
-			print $fg_bold[$COLOUR_CREATE] "  > .dotfiles directory link removed and recreated."
+			print $fg_bold[$COLOUR_MODIFY] "  > .dotfiles directory link removed and recreated."
 		fi
 	else
 		print $fg_bold[$COLOUR_OKAY] " > .dotfiles directory is already linked."
@@ -80,9 +76,8 @@ if [ -L $HOME/.dotfiles ]; then
 # Link doesn't exist, so create it.
 else
 	ln -s $DIR_DOTFILES $HOME/.dotfiles
-	print $fg_bold[$COLOUR_CREATE] " > .dotfiles directory link created."
+	print $fg_bold[$COLOUR_MODIFY] " > .dotfiles directory link created."
 fi
-
 
 # Link files from repository.
 linkFile ".gitconfig" "gitconfig"

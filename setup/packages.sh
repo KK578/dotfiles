@@ -3,17 +3,12 @@
 ## Colour setup.
 autoload colors;
 colors;
-COLOUR_DEFAULT="white"
-COLOUR_OKAY="green"
-COLOUR_CREATE="cyan"
-COLOUR_PROMPT=$COLOUR_DEFAULT
-COLOUR_NO="red"
 
 
 ## Helper function to install a package.
 function install {
 	print $fg_bold[$COLOUR_OKAY] " > Installing $1"
-	print -n $fg[$COLOUR_CREATE]
+	print -n $fg[$COLOUR_MODIFY]
 	apt-get -qq install --dry-run $1 | sed "s/^/    > /"
 }
 
@@ -21,11 +16,10 @@ function install {
 ## Entry point of script
 # As this script installs packages, request sudo if not root already.
 if [ $EUID != 0 ]; then
-	sudo $0 $@
+	print $fg[$COLOUR_DEFAULT] "[Packages] Starting."
+	sudo -E $0 $@
 	exit $?
 fi
-
-print $fg[$COLOUR_DEFAULT] "[Packages] Starting."
 
 # Packages file is located in configs directory.
 # Can't neccessarily use .dotfiles symlink as symlinks.sh uses zsh which may not be installed.'
@@ -38,7 +32,7 @@ if [ -f $PACKAGES ]; then
 		install $PACKAGE
 	done < "$PACKAGES"
 else
-	print $fg_bold[$COLOUR_NO] " > Could not find package list, expected at '$PACKAGES'"
+	print $fg_bold[$COLOUR_NOT_OKAY] " > Could not find package list, expected at '$PACKAGES'"
 fi
 
 print $fg[$COLOUR_DEFAULT] "[Packages] Complete."
