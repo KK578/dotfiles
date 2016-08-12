@@ -57,7 +57,7 @@ function linkFile {
 
 
 ## Entry point of script
-print $fg[$COLOUR_DEFAULT] "[Symlinks] Starting."
+print $fg[$COLOUR_DEFAULT] "[Symlinks]"
 DIR_DOTFILES="$(echo $(readlink -f $0) | sed -e 's#/setup/.*##')"
 
 # Check .dotfiles links to this repository.
@@ -85,4 +85,4 @@ linkFile ".zshrc" "shell/zshrc"
 linkFile ".tmux.conf" "tmux.conf"
 linkFile ".vimrc" "vimrc"
 
-print $fg[$COLOUR_DEFAULT] "[Symlinks] Complete."
+print $fg[$COLOUR_DEFAULT]

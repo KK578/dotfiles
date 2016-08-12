@@ -16,7 +16,7 @@ function install {
 ## Entry point of script
 # As this script installs packages, request sudo if not root already.
 if [ $EUID != 0 ]; then
-	print $fg[$COLOUR_DEFAULT] "[Packages] Starting."
+	print $fg[$COLOUR_DEFAULT] "[Packages]"
 	sudo -E $0 $@
 	exit $?
 fi
@@ -35,4 +35,4 @@ else
 	print $fg_bold[$COLOUR_NOT_OKAY] " > Could not find package list, expected at '$PACKAGES'"
 fi
 
-print $fg[$COLOUR_DEFAULT] "[Packages] Complete."
+print $fg[$COLOUR_DEFAULT]
