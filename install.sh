@@ -11,7 +11,7 @@ export COLOUR_PROMPT=$COLOUR_DEFAULT
 
 
 ## Entry point of script.
-DIR_SETUP="$(echo $(readlink -f $0) | sed -e 's#/setup/.*##')"
+DIR_SETUP="$(echo $(readlink -f $0) | sed -e 's#install\.sh##')"
 
 
 # Run other scripts in the setup process.
