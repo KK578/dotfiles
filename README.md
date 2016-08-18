@@ -1,6 +1,7 @@
-# Dotfiles and Linux setup scripts
+# Dotfiles and Linux Setup Scripts
 
-This repository is designed to quickly setup a Unix (Debian) environment quickly.
+This repository contains my configurations for common applications and scripts to quickly setup
+a Unix (Debian) environment quickly.
 
 
 
@@ -20,19 +21,19 @@ cd dotfiles
 
 ### Installation
 
- - Typical applications from `apt-get`.
+ - Typical applications from `apt-get`.  
     *See `configs/packages.txt`.*
- - Asks to install less commonly used applications from `apt-get`.
+ - Asks to install less commonly used applications from `apt-get`.  
     *See `configs/optional-packages.txt`.*
- - Installs other applications from git repositories.
+ - Installs other applications from git repositories.  
     *See `setup/install.sh` [Other Installations].*
 
 ### Symlinks
 
- - Setup standard config dotfiles for other applications.
-    *See `configs/`.
- - Setup standard environment for shell (zsh).
-    *See `system/`.
+ - Setup standard config dotfiles for other applications.  
+    *See `configs/`*.
+ - Setup standard environment for shell (zsh).  
+    *See `system/`*.
 
 
 
