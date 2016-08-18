@@ -26,7 +26,7 @@ function promptYesNo {
 ## Helper function to install a package.
 function install {
 	print -n $fg_bold[$COLOUR_MODIFY]
-	apt-get -qq install --dry-run $1 | sed "s/^/    > /"
+	apt-get -qq install $1 | sed "s/^/    > /"
 }
 
 

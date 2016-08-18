@@ -8,7 +8,7 @@ colors;
 ## Helper function to install a package.
 function install {
 	print $fg_bold[$COLOUR_MODIFY] " > Installing $1"
-	apt-get -qq install --dry-run $1 | sed "s/^/    > /"
+	apt-get -qq install $1 | sed "s/^/    > /"
 }
 
 
